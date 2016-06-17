@@ -1,0 +1,35 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load static %}
+{% load i18n %}
+{% block extrahead %}
+<style type="text/css">
+    li{
+        font-size: 1em;
+        text-align: center;
+    }
+    a{
+        padding: 0.5em;
+        border-radius: 8px;
+        border: 1px solid #40C4FF;
+    }
+    h1{
+        text-align:center;
+    }
+</style>
+{% endblock extrahead %}
+{% block content %}
+<div id="contenido">
+    <!-- <h2>Usuario de empleado: {{object.empleado.username}}</h2> -->
+    <h2>{{ object.r_social }}</h2>
+    <ul>
+        <li>RUC:       {{object.ruc}}</li>
+        <li>Usuario:   {{object.usuario}}</li>
+        <li>Clave Sol: {{object.clave_sol}}</li>
+        <li>Estado:    {{object.estado}}</li>
+        <li>Regimen:   {{object.regimen}}</li>
+    </ul>
+    <a href="{% url 'clientes:crear_cliente' object.empleado.slug %}" class="btn">Crear Cliente</a>
+    <a href="{% url 'clientes:clientes' object.slug %}" class="btn">Volver</a>
+</div>
+{% endblock content %} 

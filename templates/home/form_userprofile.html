@@ -1,0 +1,17 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block estilos %}
+<style>
+</style>
+{% endblock estilos %}
+{% block content %}
+<div id="contenido">
+    <a href="{% url 'home:listar_usuarios' %}" class="btn">Volver</a>
+    <h2>Usuario {{object.user.username|upper}}</h2>  
+    <form action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans "To send" %}"> 
+    </form>  
+</div>
+{% endblock content %} 

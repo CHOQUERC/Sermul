@@ -1,0 +1,13 @@
+{% extends "base_sistema.html" %}
+{% load i18n %}
+{% block content %} 
+
+<div id="contenido" class="reading-wrapper">
+    <h2>{% trans "Signup User SERMUL" %}</h2>
+     <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="{% trans "Go" %}"/>
+    </form>
+</div>
+{% endblock content %}  

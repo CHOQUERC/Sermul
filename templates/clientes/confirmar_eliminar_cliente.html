@@ -1,0 +1,14 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block content %}
+<div id="contenido">
+    <h2>Usted desea eliminar {{object.r_social}}</h2>
+    <form action="" method="post">{% csrf_token %} 
+        <p> ¿Realmente quieres borrar este {{ object.r_social }}?</p> 
+        <input type="submit" value="Confirmar" /> 
+    </form> 
+    <br>
+    <a href="{% url 'clientes:clientes' object.empleado.slug %}" class="btn">Volver</a>
+</div>
+{% endblock content %} 

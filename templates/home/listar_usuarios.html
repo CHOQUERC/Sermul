@@ -1,0 +1,91 @@
+{% extends "base_sistema.html" %}
+{% block extrahead %}
+<style type="text/css">
+    .nuevo{
+        padding:0.3em 1em 0.3em 1em;
+        border-radius: 8px;
+        background: #fff;
+        border: 1px solid  #40C4FF;
+    }
+</style>
+{% endblock extrahead %}
+{% block content %}
+<div id="contenido">
+<table cellspacing="0" class="zebra">
+    {% if request.user.is_superuser %}
+    <caption>Usuarios de SERMUL</caption>
+    {% else %}
+    <caption>Empleado {{request.user.username|upper}}</caption>
+    {% endif %}
+    <thead>
+        <tr>
+            <th>Usuario</th>
+            <th>Email</th>
+            <th>ACCIÓN</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for usuario in list_users %}
+        {% if request.user.is_superuser  %}
+        <tr>
+            <td>{{usuario.username}}</td>
+            <td>{{usuario.email}}</td>
+            <td>
+                <ul>
+                    <li><a href="{% url 'home:editar_user' usuario.slug %}">Editar Usuario</a></li>
+                    <li><a href="{% url 'home:password_change' usuario.pk %}">Cambiar Contraseña</a></li>
+                    <li><a href="{% url 'home:editar_userprofile' usuario.pk %}">Editar Perfil</a></li>
+                    {% if usuario.userprofile.name %}
+                    <li><a href="{% url 'home:detalle_userprofile' usuario.pk  usuario.userprofile.slug %}">Ver Perfil</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'clientes:crear_cliente' usuario.slug %}">Crear Cliente</a></li>
+                    {% if clientes and user.is_authenticated %}
+                    {% for i in clientes|slice:":1" %}
+                    {% if i.empleado.username in request.user.username %}
+                    <li><a href="{% url 'clientes:clientes' usuario.slug %}">Clientes</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </td>
+        </tr>
+        {% else %}
+        {% if request.user.username not in usuario.username  %}
+        {% else %}
+        <tr>
+            <td>{{usuario.username}}</td>
+            <td>{{usuario.email}}</td>
+            <td>
+                <ul>
+                    <li><a href="{% url 'home:editar_user' usuario.slug %}">Editar Usuario</a></li>
+                    <li><a href="{% url 'home:password_change' usuario.pk %}">Cambiar Contraseña</a></li>
+                    <li><a href="{% url 'home:editar_userprofile' usuario.pk %}">Editar Perfil</a></li>
+                    {% if usuario.userprofile.name %}
+                    <li><a href="{% url 'home:detalle_userprofile' usuario.pk  usuario.userprofile.slug %}">Ver Perfil</a></li>
+                    {% endif %}
+                    <li><a href="{% url 'clientes:crear_cliente' usuario.slug %}">Crear Cliente</a></li>
+                    {% if clientes and user.is_authenticated %}
+                    {% for i in clientes|slice:":1" %}
+                    {% if i.empleado.username in request.user.username %}
+                    <li><a href="{% url 'clientes:clientes' usuario.slug %}">Clientes</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endif %}
+                </ul>
+            </td>
+        </tr>
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+<a href="{% url 'home:signup_user' %}" class="nuevo">Crear Usuario</a>
+</table> 
+</div>
+{% endblock content %}

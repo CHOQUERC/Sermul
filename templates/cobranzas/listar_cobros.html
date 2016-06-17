@@ -1,0 +1,66 @@
+{% extends "base_sistema.html" %}
+{% load i18n %}
+{% block extrahead %}
+<style type="text/css">
+    .notcobro{
+        text-align:center;
+        font-size: 1.5em;
+    }
+</style>
+{% endblock extrahead %}
+{% block content %}
+<div id="contenido">
+{% if listar_cobros %}
+<table cellspacing="0" class="zebra">
+    <caption>{% trans 'Cobros' %}</caption>
+    <thead>
+        <tr>
+            <th>Cliente</th>
+            <th>Fecha de pago</th>
+            <th>Monto</th>
+            <th>ACCIÓN</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in listar_cobros %}
+        {% if i.cliente.empleado.username in request.user.username %}
+        <tr>
+            <td>{{i.cliente.r_social}}</td>
+            <td>{{i.fecha_pago}}</td>
+            <td>{{i.monto}}</td>
+            <td> 
+                <li>
+                    <a href="{% url 'cobranzas:editar_cobro' i.cliente.empleado.slug i.cliente.slug i.slug %}">Editar</a>
+                </li>
+                <li>
+                    <a href="{% url 'cobranzas:detalle_cobro' i.cliente.empleado.slug i.cliente.slug i.slug %}">Detalle</a>
+                </li>
+                <li>
+                    <a href="{% url 'cobranzas:eliminar_cobro' i.cliente.empleado.slug i.cliente.slug  i.slug %}">Eliminar</a>
+                </li>
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="4" class="notcobro">No hay cobros</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% for i in listar_cobros|slice:":1" %}
+<a href="{% url 'clientes:clientes' i.cliente.slug %}" class="btn">Volver</a>
+<a href="{% url 'cobranzas:nuevo_cobro' i.cliente.empleado.slug i.cliente.slug %}" class="btn">Nuevo Cobro</a>
+{% endfor %}
+{% else %}
+<p>No hay cobros</p>
+{% endif %}
+</div>
+{% endblock content %}  

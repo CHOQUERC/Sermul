@@ -1,0 +1,70 @@
+section .cuerpo .tabla .zebra tr td{
+    border-width: 0 0 1px;
+}
+section div table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+.zebra td, .zebra th {
+    padding:10px;
+    border-bottom: 1px solid #B3E5FC;
+    background: #f5f5f5;
+    border-width: 0 0 1px;
+
+}
+.zebra tbody tr:nth-child(even){
+    background:#f5f5f5;
+    -webkit-box-shadow: 0 1px 0 rgba(255,255,255,.8);
+    box-shadow: 0 1px 0  rgba(255,255,255,.8);
+}
+.zebra th{
+    text-align: left;
+    text-shadow:0 1px 0 rgba(255,255,255,.5);
+    border-bottom: 1px solid #ccc;
+    background:#18ffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#18ffff), to(#000));
+    background-image: -webkit-linear-gradient(top, #f5f5f5, #eee);
+    background-image:    -moz-linear-gradient(top, #f5f5f5, #eee);
+    background-image:     -ms-linear-gradient(top, #f5f5f5, #eee);
+    background-image:      -o-linear-gradient(top, #f5f5f5, #eee);
+    background-image:         linear-gradient(top, #f5f5f5, #eee);
+}
+.zebra th:first-child {
+    /* -moz-border-radius: 6px 0 0 0; */
+    /* -webkit-border-radius:6px 0 0 0; */
+    /* border-radius:6px 0 0 0; */
+}
+.zebra th:last-child {
+    /* -moz-border-radius: 0 6px 0 0; */
+    /* -webkit-border-radius: 0 6px 0 0; */
+    /* border-radius:0 6px 0 0; */    
+}
+.zebra th:only-child {
+    -moz-border-radius: 6px 6px 0 0;
+    -webkit-border-radius: 6px 6px 0 0;
+    border-radius:6px 6px 0 0;    
+}
+.zebra tfoot td{
+    border-bottom: 0;
+    border-top:1px solid #C6FF00;
+    background-color:#ECEFF1;
+}
+.zebra tfoot td:first-child {
+    -moz-border-radius: 0 0 0 12px;
+    -webkit-border-radius: 0 0 0 12px;
+    border-radius:0 0 0 12px;    
+}
+.zebra tfoot td:last-child {
+    -moz-border-radius: 0 0 12px 0;
+    -webkit-border-radius: 0 0 12px 0;
+    border-radius:0 0 12px 0;
+}
+
+.zebra tfoot td:only-child {
+    -moz-border-radius: 0 0 6px 6px;
+    -webkit-border-radius: 0 0 6px 6px;
+    border-radius:0 0 6px 6px;    
+}
+.zebra td{
+    border-width: 0 0 1px;
+}

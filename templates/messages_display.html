@@ -1,0 +1,20 @@
+{% if messages %}
+<style type="text/css">
+    li{
+        list-style-type: none;
+        padding: 2em;
+        text-align: center;
+    }
+    .card-body{
+        width:52%;
+        margin: 0 auto;
+    }
+</style>
+<div class="card-body card-padding">
+    <div class="alert alert-success alert-dismissible" role="alert">
+        {% for message in messages %}
+        <li{% if message.tags %} id="message" class="{{ message.tags }}"{% endif %}>{{ message|safe }}</li>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}       

@@ -1,0 +1,7 @@
+django==1.9.6
+Pillow
+django-registration
+django-linguist
+django-rosetta
+#sudo apt-get install graphviz libgraphviz-dev graphviz-dev python-pygraphviz
+django-extensions

@@ -1,0 +1,205 @@
+{% load staticfiles %}
+{% load i18n %}
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title></title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+<link href="{% static 'css/tabla.css' %}" rel="stylesheet">
+<link href="{% static 'css/default.css' %}" rel="stylesheet" type="text/css" media="all" />
+<style type="text/css">
+    h2{
+        text-align: center;
+    }
+    .zebra{
+        margin: 0 auto;
+    }
+    #contenido{
+        background:#E0F7FA;
+        width:50%;
+        margin: 0 auto;
+        padding: 1em;
+        border-radius: 8px;
+    }
+    input[type="text"],textarea,
+    input[type="number"],input[type="password"],input[type="email"]{
+        padding:0.7em;
+        height: 8px;
+        border-radius:4px;
+        outline: none;
+        border: 1px solid #00B8D4;
+        margin-bottom: 0.2em;
+        float: right;
+    }
+    input[type="submit"]{
+        width: 100%;
+        padding: 0.5em 2em 0.5em 2em;
+        border-radius:4px;
+        background: #03A9F4;
+        border: 1px solid #03A9F4;
+        color: #fff;
+    }
+    input[type="submit"]:hover{
+        cursor: pointer;
+        background: #fff;
+        color: #03A9F4;
+    }
+    fieldset{
+        font-family:sans-serif;
+        font-size: 2em;
+        border:1px solid #00B0FF;
+        border-radius:8px;
+    }
+    legend{
+        color:#00BCD4;
+    }
+    caption{
+        font-size:1.5em;
+    }
+    #message{
+        padding: 0.5 2em 0.5 2em;
+        border-radius: 8px;
+        background: #64DD17;
+        color: #fff;
+    }
+    .form{
+        width:60%;
+        margin: 0 auto;
+    }
+    .btn{
+        padding:0.3em 2em 0.3em 2em;
+        border-radius:8px;
+        background:#fff;
+        border: 1px solid #00B0FF;
+    }
+    a:active{
+        position: relative;
+        top:1px;
+    }
+    .imagen{
+        width:20%;
+        border-radius:50%;
+    }
+</style>
+{% block extrahead %}
+{% endblock extrahead %}
+</head>
+<body>
+<div id="wrapper" class="container">
+	<div id="header">
+		<div id="logo">
+            <h1><a href="{% url 'home:inicio' %}">SERMUL</a></h1>
+            {% if user.is_authenticated %}
+            <p><a href="#" rel="nofollow">{{request.user.userprofile.name}}
+ {{request.user.userprofile.f_surname}} {{request.user.userprofile.s_maternal}}</a></p>
+            {% endif %}
+            {% if request.user.userprofile.avatar %}
+            <img src="{{request.user.userprofile.avatar.url}}" class="imagen">
+            {% endif %}
+		</div>
+		<div id="menu">
+			<ul>
+				<li class="current_page_item"><a href="{% url 'home:inicio' %}">Homepage</a></li>
+                {% if user.is_authenticated %}
+                {% if user.is_superuser %}
+                <li><a href="{% url 'home:listar_usuarios' %}">Usuarios</a></li>
+                {% else %}
+                <li><a href="{% url 'home:listar_usuarios' %}">Actividad</a></li>
+                {% endif %}
+				<li><a href="{% url 'home:logout_user' %}">{{request.user.username|upper}}</a></li>
+				{% else %}
+				<li><a href="{% url 'home:login_user' %}">Login</a></li>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+    {% include "messages_display.html" %}
+    {% block content %}
+	<div id="banner"><img src="{% static 'images/header-image.jpg' %}" width="1100" height="500" alt="" /></div>
+	<div id="page">
+		<div id="content">
+			<div id="cbox1">
+				<h2>Praesent scelerisque scelerisque erat</h2>
+				<p><img src="{% static 'images/content-image.jpg' %}" width="750" height="200" alt="" /></p>
+				<p><a href="#" class="link-style">Read More</a></p>
+			</div>
+			<div id="two-column">
+				<div id="tbox1">
+					<h2>Mauris vulputate dolor</h2>
+					<ul class="style2">
+						<li class="first">
+							<h3><a href="#">Maecenas luctus lectus</a></h3>
+							<p><a href="#">Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.</a></p>
+						</li>
+						<li>
+							<h3><a href="#">Integer gravida nibh</a></h3>
+							<p><a href="#">Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.</a></p>
+						</li>
+						<li>
+							<h3><a href="#">Fusce ultrices fringilla</a></h3>
+							<p><a href="#">Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.</a></p>
+						</li>
+					</ul>
+				</div>
+				<div id="tbox2">
+					<h2>Nulla luctus eleifend purus</h2>
+					<ul class="style2">
+						<li class="first">
+							<h3><a href="#">Maecenas luctus lectus</a></h3>
+							<p><a href="#">Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.</a></p>
+						</li>
+						<li>
+							<h3><a href="#">Integer gravida nibh</a></h3>
+							<p><a href="#">Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.</a></p>
+						</li>
+						<li>
+							<h3><a href="#">Fusce ultrices fringilla</a></h3>
+							<p><a href="#">Quisque dictum integer nisl risus, sagittis convallis, rutrum id, congue, and nibh.</a></p>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div id="sidebar">
+			<div id="box1">
+				<h2>Sermul ofrece servicios para llevar un negocio seguro</h2>
+				<ul class="style1">
+					<li class="first"><a href="#">Vestibulum luctus venenatis dui</a></li>
+					<li><a href="#">Aenean elementum facilisis ligula</a></li>
+					<li><a href="#">Ut tincidunt elit vitae augue</a></li>
+					<li><a href="#">Aenean elementum facilisis ligula</a></li>
+					<li><a href="#">Ut tincidunt elit vitae augue</a></li>
+					<li><a href="#">Sed quis odio sagittis leo vehicula</a></li>
+				</ul>
+				<p><a href="#" class="link-style">Read More</a></p>
+			</div>
+			<div id="box2">
+				<h2>Maecenas lectus</h2>
+				<ul class="style3">
+                    <li class="first"><img src="{% static 'images/img02.jpg' %}" width="78" height="78" alt="">
+						<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
+						<p class="posted">October 28, 2002  |  (10 )  Comments</p>
+					</li>
+                    <li><img src="{% static 'images/img03.jpg' %}" width="78" height="78" alt="">
+						<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
+						<p class="posted">October 21, 2002  |  (10 )  Comments</p>
+					</li>
+                    <li><img src="{% static 'images/img04.jpg' %}" width="78" height="78" alt="">
+						<p>Nullam non wisi a sem eleifend. Donec mattis libero eget urna. </p>
+						<p class="posted">October 19, 2002  |  (10 )  Comments</p>
+					</li>
+				</ul>
+				<p><a href="#" class="link-style">Read More</a></p>
+			</div>
+		</div>
+    </div>
+	{% endblock content %}
+	<div id="footer">
+		<p>&copy; Untitled. All rights reserved. Design by <a href="http://templated.co" rel="nofollow">SERMUL</a>. Hecho by <a href="https://github.com/CHOQUERC">RubenCP</a>.</p>
+	</div>
+</div>
+</body>
+</html>

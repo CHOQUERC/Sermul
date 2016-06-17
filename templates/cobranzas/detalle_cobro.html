@@ -1,0 +1,31 @@
+{% extends "base_sistema.html" %}
+{% block extrahead %}
+<style type="text/css">
+</style>
+{% endblock extrahead %}
+{% block content %}
+<div id="contenido">
+ <fieldset>
+    <legend>{{object.cliente.r_social}}</legend>
+    <li>{{object.decl_men}}</li>
+    <li>{{object.planilla}}</li>
+    <li>{{object.balan_gen}}</li>
+    <li>{{object.descripcion}}</li>
+    <li>{{object.fecha_pago}}</li>
+    <li>{{object.monto}}</li>
+    <li>{{object.periodo}}</li>
+</fieldset>
+
+{% for i in servicios %}
+{% if i.cobro.decl_men in object.decl_men %}
+<fieldset>
+    <legend>Servicio {{i.id}}</legend>
+    <li>{{i.nombre}}</li>
+    <li>{{i.precio}}</li>
+</fieldset>
+{% endif %}
+{% endfor %}
+<a href="{% url 'cobranzas:listar_cobros' object.cliente.empleado.slug object.cliente.slug %}" class="btn">Volver</a>
+</div>
+{% endblock content %}
+

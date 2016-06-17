@@ -1,0 +1,25 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load static %}
+{% load i18n %}
+{% block extrahead %}
+<style type="text/css">
+    .img{
+        margin-left: 20%;
+        border-radius: 8px;
+    }
+    h3{
+        text-align: center;
+    }
+</style>
+{% endblock extrahead %}
+{% block content %}
+<div id="contenido">
+    {% if object.avatar %}
+    <img class="img" src="{{object.avatar.url}}" height=300" />
+    {% endif %}
+    <h2>{{ object.name }} {{object.f_surname}} {{object.s_maternal}}</h2>
+    <h3>Nació el {{object.fecha_nac}}</h3>
+    <a href="{% url 'home:listar_usuarios' %}" class="btn">Volver</a>
+</div>
+{% endblock content %} 

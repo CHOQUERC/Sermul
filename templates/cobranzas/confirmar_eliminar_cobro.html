@@ -1,0 +1,11 @@
+{% extends "base_sistema.html" %}
+{% block content %}
+<div id="contenido">
+<h2>Eliminar cobro</h2>
+<form action="" method="post">{% csrf_token %}
+    <h3>Esta seguro de que quiere eliminar {{object.decl_men}}?</h3>
+    <input type="submit" name="" value="Eliminar">
+    <a href="{% url 'cobranzas:listar_cobros' object.cliente.empleado.slug  object.cliente.slug  %}">Volver</a>
+</form>
+</div>
+{% endblock content %}

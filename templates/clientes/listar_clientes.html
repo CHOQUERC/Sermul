@@ -1,0 +1,62 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block content %}
+<div id="contenido">
+{% if list_clientes %}
+<table cellspacing="0" class="zebra">
+    <caption>{% trans 'Clientes' %}</caption>
+    <thead>
+        <tr>
+            <th>Razón Social</th>
+            <th>RUC</th>
+            <th>Usuario</th>
+            <th>Clave Sol</th>
+            <th>ACCIÓN</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for cliente in list_clientes %}
+        {% if cliente.empleado.username in request.user.username %}
+        <tr>
+            <td>{{cliente.r_social}}</td>
+            <td>{{cliente.ruc}}</td>
+            <td>{{cliente.usuario}}</td>
+            <td>{{cliente.clave_sol}}</td>
+            <td> 
+                <li>
+                    <a href="{% url 'cobranzas:listar_cobros' cliente.empleado.slug cliente.slug %}">Cobros</a>
+                </li>
+                <li>
+                    <a href="{% url 'cobranzas:nuevo_cobro' cliente.empleado.slug cliente.slug %}">Nuevo Cobro</a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes:editar_cliente' cliente.empleado.slug cliente.slug %}">Editar</a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes:detalle_cliente' cliente.empleado.slug cliente.slug %}">Detalle</a>
+                </li>
+                <li>
+                    <a href="{% url 'clientes:eliminar_cliente' cliente.slug %}">Eliminar</a>
+                </li>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% for i in list_clientes|slice:":1" %}
+<a href="{% url 'clientes:crear_cliente' i.empleado.slug %}" class="btn">Nuevo Cliente</a>
+{% endfor %}
+{% endif %}
+</div>
+{% endblock content %} 

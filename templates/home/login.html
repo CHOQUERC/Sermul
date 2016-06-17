@@ -1,0 +1,33 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block extrahead %}
+<style type="text/css">
+    .create {
+        position:relative;
+        top: 1em;
+        bottom:1em;
+        padding:0.5em 1em 0em 1em;
+        border: 1px solid #cdcdcd;
+        text-align:center;
+        width:55%;
+        margin: 0 auto;
+    }
+</style>
+{% endblock extrahead %}
+{% block content %} 
+<div id="contenido" class="reading-wrapper">
+    <h2>{% trans "Log in SERMUL" %}</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form">
+            {{ form.as_p }}
+            <input type="submit" value="Log In"/>
+        </div>
+    </form>
+    <div class="create">
+        <p>Si no tiene una cuenta haga click <a href="{% url 'home:signup_user' %}">aquí</a> </p>        
+    </div>
+    <br>
+</div>
+{% endblock content %} 

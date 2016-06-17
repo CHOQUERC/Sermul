@@ -1,0 +1,15 @@
+{% extends "base_sistema.html" %}
+{% load i18n %}
+{% block content %}
+<div id="contenido">
+    <h1>Bienvenido, {{ request.user.username|upper }} a tu cuenta</h1>
+    <h2>Cambiar contraseña <a href="{% url 'home:password_change' request.user.pk %}">aqui</a></h2>
+    <form  method="post"> {% csrf_token %}
+        {{ form.as_p }}
+        <!-- {{ form.is_active }} -->
+        <!-- {{ form.is_staff }} -->
+        <!-- {{ form.is_superuser }} -->
+        <input type="submit" value="{% trans "Update" %}">
+    </form>
+</div>
+{% endblock content %}
