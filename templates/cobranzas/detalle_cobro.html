@@ -1,30 +1,66 @@
 {% extends "base_sistema.html" %}
+{% load staticfiles %}
 {% block extrahead %}
+<link href="{% static 'css/list.css' %}" rel="stylesheet">
 <style type="text/css">
+    .item{
+        width:40%;
+        margin: 2em 0em 0em 2em;
+        position: relative;
+        display: inline-block;
+        background: #fff8e1;
+        border: 1px solid #00e5ff;
+        border-radius: 12px;
+    }
+    .item1{
+        width:50%;
+        margin: 0 auto;
+        background: #fff8e1;
+        border: 1px solid #00e5ff;
+        border-radius: 12px;
+    }
+    #serv {
+        padding: 0.5em 1em 0.5em 1em;
+        background:#84FFFF;
+        border-left: 7px solid #00E5FF;
+        border-right: 7px solid #00E5FF;
+        margin: 2em 0em 0em 0em;
+    }
+    #lab {
+        margin-top: 1em;
+        text-align:center;
+    }
+    .btn {
+        margin-left: 80%;
+    }
 </style>
 {% endblock extrahead %}
 {% block content %}
 <div id="contenido">
- <fieldset>
-    <legend>{{object.cliente.r_social}}</legend>
-    <li>{{object.decl_men}}</li>
-    <li>{{object.planilla}}</li>
-    <li>{{object.balan_gen}}</li>
-    <li>{{object.descripcion}}</li>
-    <li>{{object.fecha_pago}}</li>
-    <li>{{object.monto}}</li>
-    <li>{{object.periodo}}</li>
-</fieldset>
-
-{% for i in servicios %}
-{% if i.cobro.decl_men in object.decl_men %}
-<fieldset>
-    <legend>Servicio {{i.id}}</legend>
-    <li>{{i.nombre}}</li>
-    <li>{{i.precio}}</li>
-</fieldset>
-{% endif %}
-{% endfor %}
+    <h2>Detalle de Cobro al Cliente {{object.cliente.r_social}}</h2> 
+    <div class="item1">
+        <ol id="list" class="rounded-list">
+            <li><a href=""><strong>Declaración Mensual: </strong>{{object.decl_men}}</a></li>
+            <li><a href=""><strong>Planilla</strong>{{object.planilla}}</a></li>
+            <li><a href=""><strong>Balance General</strong>{{object.balan_gen}}</a></li>
+            <li><a href=""><strong>Descripción</strong>{{object.descripcion}}</a></li>
+            <li><a href=""><strong>Fecha de Pago</strong>{{object.fecha_pago}}</a></li>
+            <li><a href=""><strong>Monto</strong>{{object.monto}}</a></li>
+            <li><a href=""><strong>Periodo</strong>{{object.periodo}} {{object.anio}}</a></li>
+        </ol> 
+    </div> 
+    <h2 id="serv">Servicios</h2>
+    {% for i in servicios %}
+    <div class="item">
+        <h3 id="lab">Servicio {{i.id}}</h3>
+        <ol id="list" class="rounded-list">            
+            <li><a href=""><strong>Nombre: </strong>{{i.nombre}}</a></li>
+            <li><a href=""><strong>Precio: </strong>{{i.precio}}</a></li>
+        </ol> 
+    </div>
+    {% endfor %} 
+    <br/>
+    <br/>
 <a href="{% url 'cobranzas:listar_cobros' object.cliente.empleado.slug object.cliente.slug %}" class="btn">Volver</a>
 </div>
 {% endblock content %}

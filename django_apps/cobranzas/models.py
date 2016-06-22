@@ -35,6 +35,7 @@ class Cobro(models.Model):
     fecha_pago = models.DateField(_('Fecha de Pago'))
     monto = models.DecimalField(_('Monto S/.'), max_digits=16, decimal_places=2)
     periodo = models.CharField(_('Periodo'), choices=MES, max_length=10)
+    anio = models.CharField(_('Año'), max_length=4)
 
     def __str__(self):
         return "%s: %s" %(self.empleado.username,self.cliente.usuario)

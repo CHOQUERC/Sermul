@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_db_signals',
-    'django_extensions'
+    'django_extensions',
     # 'rosetta',
+    'jquery',
+    'djangoformsetjs',
 ]
 
 MIDDLEWARE_CLASSES = [

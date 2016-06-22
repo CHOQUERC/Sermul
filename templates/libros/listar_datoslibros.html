@@ -1,0 +1,54 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% load i18n %}
+{% block content %}
+<div id="contenido">
+{% if list_libros %}
+<table cellspacing="0" class="zebra">
+    <caption>{% trans 'Libros de la UIT' %} de {{cliente.r_social}}</caption>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>UIT</th>
+            <th>ACCIÓN</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in list_libros %}
+        {% if i.cliente.r_social in cliente.r_social %}
+        <tr>
+            <td>{{i.id}}</td>
+            <td>{{i.uit}}</td>
+            <td> 
+                <li>
+                    <a href="{% url 'libros:editar_libros' i.cliente.empleado.slug i.cliente.slug i.pk %}">Editar</a>
+                </li>
+                <li>
+                    <a href="{% url 'libros:detalle_libros' i.cliente.empleado.slug i.cliente.slug i.pk %}">Detalle</a>
+                </li>
+                <li>
+                    <a href="{% url 'libros:eliminar_libros' i.cliente.empleado.slug i.cliente.slug i.pk %}">Eliminar</a>
+                </li>
+            </td>
+        </tr>
+        {% endif %}
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </tfoot>
+</table>
+{% else %}
+<p>No hay libros</p>
+{% endif %}
+{% for i in list_libros|slice:":1"%}
+{% if i.cliente.r_social in cliente.r_social %}
+<a href="{% url 'clientes:clientes' i.cliente.empleado.slug %}" class="btn">Volver</a>
+{% endif %}
+{% endfor %}
+</div> 
+{% endblock content %}

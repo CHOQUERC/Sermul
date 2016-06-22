@@ -7,7 +7,7 @@ class CobroForm(forms.ModelForm):
     class Meta:
         model = Cobro
         fields = ['cliente','decl_men','planilla','balanc_gen',
-                  'descripcion','fecha_pago','monto','periodo']
+                  'descripcion','fecha_pago','monto','periodo','anio']
 
 class ServicioForm(forms.ModelForm):
     class Meta:

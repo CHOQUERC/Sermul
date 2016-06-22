@@ -24,7 +24,7 @@ class UIT(models.Model):
         return cliente.r_social
 
     def get_absolute_url(self):
-        return reverse('libros:detalle_uit', kwargs={'uit_pk':self.pk})
+        return reverse('libros:detalle_libros', kwargs={'empleado_slug':self.cliente.empleado.slug,'cliente_slug':self.cliente.slug,'uit_pk':self.pk})
 
 class TipoLibro(models.Model):
     TIPO = (

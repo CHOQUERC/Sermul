@@ -1,116 +1,64 @@
 {% extends "base_sistema.html" %}
 {% load staticfiles %}
+{% load formset_tags %}
 {% block extrahead %}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-
-<script type="text/javascript">
-$(document).ready(function() {
-  // Code adapted from http://djangosnippets.org/snippets/1389/
-
-  function updateElementIndex(el, prefix, ndx) {
-    var id_regex = new RegExp('(' + prefix + '-\\d+-)');
-    var replacement = prefix + '-' + ndx + '-';
-    if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,
- replacement));
-    if (el.id) el.id = el.id.replace(id_regex, replacement);
-    if (el.name) el.name = el.name.replace(id_regex, replacement);
-  }
-
-  function deleteForm(btn, prefix) {
-    var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-
-    if (formCount > 1) {
-      // Delete the item/form
-      $(btn).parents('.item').remove();
-
-      var forms = $('.item'); // Get all the forms
-
-      // Update the total number of forms (1 less than before)
-      $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
-
-      var i = 0;
-      // Go through the forms and set their indices, names and IDs
-      for (formCount = forms.length; i < formCount; i++) {
-        $(forms.get(i)).children().children().each(function() {
-          updateElementIndex(this, prefix, i);
-        });
-      }
-    } // End if
-    else {
-        alert("You have to enter at least one todo item!");
+<script src="{{ STATIC_URL }}js/jquery.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.formset.js"></script>
+<style type="text/css">
+    .item {
+        background-color: #dcf0f7;
+        border: 1px solid #ddd;
+        margin-bottom: 4px;
+        padding: 5px 15px;
+    } 
+    input[type="button"]{
+        padding: 0.4em 1em 0.5em 1em;
+        border: 1px solid #00bcd4;
+        background: #80deea;
+        border-radius: 8px;
+        margin-bottom: 1em;
     }
+    input[type="button"]:hover{
+        cursor: pointer;
+        background: #fff;
 
-    return false;
-  }
-
-
-  function addForm(btn, prefix) {
-    var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
-
-    if (formCount < 10) {
-    // You can only submit a maximum of 10 todo items 
-      // Clone a form (without event handlers) from the first form
-      var row = $(".item:first").clone(false).get(0);
-      // Insert it after the last form
-      $(row).removeAttr('id').hide().insertAfter(".item:last").slideDown(300);
-      
-      // Remove the bits we don't want in the new row/form
-      // e.g. error messages
-      $(".errorlist", row).remove();
-      $(row).children().removeClass('error');
-      
-      // Relabel/rename all the relevant bits
-      $(row).children().children().each(function() {
-        updateElementIndex(this, prefix, formCount);
-        if ( $(this).attr('type') == 'text' )
-          $(this).val('');
-      });
-      
-      // Add an event handler for the delete item/form link 
-      $(row).find('.delete').click(function() {
-        return deleteForm(this, prefix);
-      });
-
-      // Update the total form count
-      $('#id_' + prefix + '-TOTAL_FORMS').val(formCount + 1); 
-    } // End if
-    else {
-      alert("Sorry, you can only enter a maximum of ten items.");
-    }
-
-    return false;
-  }
-
-  // Register the click event handlers
-  $("#add").click(function() {
-    return addForm(this, 'form');
-  });
-  
-  $(".delete").click(function() {
-    return deleteForm(this, 'form');
-  });
-
-
-});
-</script> 
+    } 
+</style>
 {% endblock extrahead %}
 {% block content %}
 <div id="contenido">
+    <h2>Nuevo Cobro</h2>
     <form action="" method="post">{% csrf_token %}
-        <h2>Nuevo Cobro</h2>
         <div class="section">
             {{ form.as_p }}
         </div>
         <h2>Servicios</h2>
-        {{ servicio_form.management_form }}
-        {% for form in servicio_form %}
-        <div class="item">
-            {{ form.as_p }}
-            <p style=""><a class="delete" href="#">Delete</a></p>
+        <div id="formset" data-formset-prefix="{{ formset.prefix }}">
+            {{ formset.management_form }}
+            <div data-formset-body>
+                {% for form in formset %}
+                <div class="item" data-formset-form>
+                    {{ form.as_p }}
+                </div>
+                {% endfor %}
+            </div>
+            <script type="form-template" data-formset-empty-form>
+                {% escapescript %}
+                <div class="item" data-formset-form>
+                {{ formset.empty_form.as_p }}
+                </div>
+                {% endescapescript %}
+            </script>
+            <input type="button" value="Agregar Otro" data-formset-add>
+            <script>jQuery(function($) {
+                $("#formset").formset({
+                    animateForms: true
+                });});
+            </script>
         </div>
-        {% endfor %}        
-        <p><a id="add" href="#">Add another item</a></p>
-        <input type="submit" name="" value="Guardar">
-    </form>
+    <input type="submit" name="" value="Guardar">
+</form>
+<br>
+<a href="{% url 'cobranzas:listar_cobros' cliente.empleado.slug cliente.slug %}" class="btn">Volver</a>
 </div>
 {% endblock content %}

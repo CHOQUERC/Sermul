@@ -41,7 +41,7 @@
                     <li><a href="{% url 'clientes:crear_cliente' usuario.slug %}">Crear Cliente</a></li>
                     {% if clientes and user.is_authenticated %}
                     {% for i in clientes|slice:":1" %}
-                    {% if i.empleado.username in request.user.username %}
+                    {% if i.empleado.username in usuario.username  %}
                     <li><a href="{% url 'clientes:clientes' usuario.slug %}">Clientes</a></li>
                     {% endif %}
                     {% endfor %}

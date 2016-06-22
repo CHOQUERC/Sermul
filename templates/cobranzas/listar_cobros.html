@@ -23,7 +23,7 @@
     </thead>
     <tbody>
         {% for i in listar_cobros %}
-        {% if i.cliente.empleado.username in request.user.username %}
+        {% if i.cliente.empleado.username in empleado.username %}
         <tr>
             <td>{{i.cliente.r_social}}</td>
             <td>{{i.fecha_pago}}</td>
@@ -40,10 +40,11 @@
                 </li>
             </td>
         </tr>
-        {% endif %}
+        {% else %}
         <tr>
             <td colspan="4" class="notcobro">No hay cobros</td>
         </tr>
+        {% endif %}
         {% endfor %}
     </tbody>
     <tfoot>
@@ -55,6 +56,8 @@
         </tr>
     </tfoot>
 </table>
+<br>
+<br>
 {% for i in listar_cobros|slice:":1" %}
 <a href="{% url 'clientes:clientes' i.cliente.slug %}" class="btn">Volver</a>
 <a href="{% url 'cobranzas:nuevo_cobro' i.cliente.empleado.slug i.cliente.slug %}" class="btn">Nuevo Cobro</a>

@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^', include('django_apps.home.urls')),
     url(r'^clientes/', include('django_apps.clientes.urls')),
+    url(r'^libros/', include('django_apps.libros.urls')),
     url(r'^cobranzas/', include('django_apps.cobranzas.urls')),
 ]
 urlpatterns += i18n_patterns(

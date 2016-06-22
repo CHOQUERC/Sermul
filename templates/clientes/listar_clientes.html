@@ -1,6 +1,14 @@
 {% extends "base_sistema.html" %}
 {% load staticfiles %}
 {% load i18n %}
+{% block extrahead %}
+<style type="text/css">
+    .btn {
+        position: relative;
+        display: inline-block;
+    }
+</style>
+{% endblock extrahead %}
 {% block content %}
 <div id="contenido">
 {% if list_clientes %}
@@ -17,7 +25,7 @@
     </thead>
     <tbody>
         {% for cliente in list_clientes %}
-        {% if cliente.empleado.username in request.user.username %}
+        {% if cliente.empleado.username in request.user.username or request.user.is_superuser %}
         <tr>
             <td>{{cliente.r_social}}</td>
             <td>{{cliente.ruc}}</td>
@@ -29,6 +37,9 @@
                 </li>
                 <li>
                     <a href="{% url 'cobranzas:nuevo_cobro' cliente.empleado.slug cliente.slug %}">Nuevo Cobro</a>
+                </li>
+                <li>
+                    <a href="{% url 'libros:listar_libros' cliente.empleado.slug cliente.slug %}">Libros</a>
                 </li>
                 <li>
                     <a href="{% url 'clientes:editar_cliente' cliente.empleado.slug cliente.slug %}">Editar</a>
@@ -56,6 +67,7 @@
 </table>
 {% for i in list_clientes|slice:":1" %}
 <a href="{% url 'clientes:crear_cliente' i.empleado.slug %}" class="btn">Nuevo Cliente</a>
+<a href="{% url 'libros:crear_libros' i.empleado.slug i.slug %}" class="btn">Nuevo Libro</a>
 {% endfor %}
 {% endif %}
 </div>

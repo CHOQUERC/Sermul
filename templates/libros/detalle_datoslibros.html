@@ -1,0 +1,39 @@
+{% extends "base_sistema.html" %}
+{% load staticfiles %}
+{% block extrahead %}
+<link href="{% static 'css/list.css' %}" rel="stylesheet">
+<style type="text/css">
+    .item{
+        width:70%;
+        margin: 0 auto;
+        background: #fff8e1;
+        border: 1px solid #00e5ff;
+        border-radius: 12px;
+    }
+</style>
+{% endblock extrahead %}
+{% block content %}
+<div id="contenido">
+    <h1>{{object.cliente.r_social}}</h1>
+    <h2>{{object.uit}}</h2>
+    {% for i in libros %}
+    <div class="item">
+        <ol id="list" class="rounded-list">
+            <li><a href=""><strong>Libro: </strong>{{i.libro}}</a></li>
+            <li><a href=""><strong>Número de Serie: </strong>{{i.num_serie}}</a></li>
+            <li><a href=""><strong>Número de Páginas: </strong>{{i.num_paginas}}</a></li>
+            <li><a href=""><strong>Fecha de Legalización: </strong>{{i.fecha_leg}}</a></li>
+            <li><a href=""><strong>Fecha de Modificación: </strong>{{i.fecha_mod}}</a></li>
+            <li><a href=""><strong>Número de hojas: </strong>{{i.num_hojas}}</a></li>
+            <li><a href=""><strong>Fecha de Vencimiento: </strong>{{i.fecha_vence}}</a></li>
+
+        </ol> 
+    </div>
+    {% endfor %}
+    <br>
+    <br>
+    <a href="{% url 'libros:crear_libros' object.cliente.empleado.slug object.cliente.slug %}" class="btn">Crear Nuevo libro</a>
+    <a href="{% url 'libros:editar_libros' object.cliente.empleado.slug object.cliente.slug  object.pk %}" class="btn">Editar Libro</a>
+    <a href="{% url 'libros:listar_libros' object.cliente.empleado.slug object.cliente.slug %}" class="btn">Volver</a>
+</div>
+{% endblock content %}
